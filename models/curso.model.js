@@ -1,0 +1,1 @@
+import { Curso } from '../models/curso.model.js';
