@@ -6,6 +6,8 @@ const EstablecimientoSchema = new mongoose.Schema(
     direccion: String,
     telefono: String,
     email: String,
+    latitud: { type: Number, required: false },
+    longitud: { type: Number, required: false },
     cursos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Curso' }]
   },
   { timestamps: true }
