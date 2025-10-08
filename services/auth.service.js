@@ -1,11 +1,12 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { createUser, findUserByEmail } from '../repositories/usuario.repository.js';
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { createUser, findUserByEmail } = require('../repositories/usuario.repository');
 
 const SECRET_KEY = process.env.JWT_SECRET || 'supersecretkey';
 
-export const register = async ({ nombre, apellido, email, password, rol }) => {
+const register = async ({ nombre, apellido, email, password, rol }) => {
   const existingUser = await findUserByEmail(email);
+  
   if (existingUser) {
     const error = new Error('El email ya está registrado');
     error.status = 400;
@@ -32,7 +33,7 @@ export const register = async ({ nombre, apellido, email, password, rol }) => {
   };
 };
 
-export const login = async ({ email, password }) => {
+const login = async ({ email, password }) => {
   const user = await findUserByEmail(email);
   if (!user) {
     const error = new Error('Usuario no encontrado');
@@ -65,3 +66,5 @@ export const login = async ({ email, password }) => {
     }
   };
 };
+
+module.exports = { register, login };

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const AsistenciaSchema = new mongoose.Schema(
   {
@@ -15,4 +15,4 @@ const AsistenciaSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('Asistencia', AsistenciaSchema);
+module.exports = mongoose.model('Asistencia', AsistenciaSchema);
