@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const EstablecimientoSchema = new mongoose.Schema(
   {
@@ -13,4 +13,4 @@ const EstablecimientoSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('Establecimiento', EstablecimientoSchema);
+module.exports = mongoose.model('Establecimiento', EstablecimientoSchema);

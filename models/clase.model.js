@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const ClaseSchema = new mongoose.Schema(
   {
@@ -15,4 +15,4 @@ const ClaseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('Clase', ClaseSchema);
+module.exports = mongoose.model('Clase', ClaseSchema);
