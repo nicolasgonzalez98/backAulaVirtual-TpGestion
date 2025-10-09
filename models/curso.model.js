@@ -11,7 +11,17 @@ const CursoSchema = new mongoose.Schema(
       ref: 'Establecimiento',
       required: true
     },
-    docentes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }]
+    docentes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
+    modalidadClases: {
+      type: String,
+      enum: ['fechas_preestablecidas', 'clases_diarias'],
+      required: true,
+    },
+    // Para modalidad 'fechas_preestablecidas' -> las clases se crean manualmente (ya lo haces con tu modelo Clase)
+    // Para modalidad 'clases_diarias' -> se generan automáticamente con estos campos:
+    fechaInicio: { type: Date },
+    fechaFin: { type: Date },
+    duracionPorDiaHoras: { type: Number, default: 8 }
   },
   { timestamps: true }
 );
