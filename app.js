@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cursoRoutes from './routes/curso.routes.js';
+import asistenciaRoutes from './routes/asistencia.routes.js';
 
 const app = express();
 
@@ -9,5 +10,6 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/cursos', cursoRoutes);
+app.use('/api/asistencias', asistenciaRoutes);
 
 export default app;
