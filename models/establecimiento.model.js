@@ -8,7 +8,8 @@ const EstablecimientoSchema = new mongoose.Schema(
     email: String,
     latitud: { type: Number, required: false },
     longitud: { type: Number, required: false },
-    cursos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Curso' }]
+    cursos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Curso' }],
+    responsable: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }
   },
   { timestamps: true }
 );
