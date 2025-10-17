@@ -11,7 +11,8 @@ const usuarioSchema = new mongoose.Schema(
       enum: ['alumno', 'docente', 'admin', 'superadmin'],
       required: true
     },
-    establecimientos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento' }]
+    establecimientos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento' }],
+    establecimientoAdministra: { type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento', default: null }
   },
   { timestamps: true }
 );

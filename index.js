@@ -3,7 +3,8 @@ const express = require('express');
 const cors = require('cors')
 const app = express();
 const port = process.env.PORT;
-const authRoutes = require('./routes/auth.routes'); 
+const authRoutes = require('./routes/auth.routes');
+const establecimientosRoutes = require('./routes/establecimiento.routes'); 
 const connectDB = require('./database/connection');
 
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/establecimientos', establecimientosRoutes);
 
 
 app.listen(port, () => {
