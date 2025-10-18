@@ -12,8 +12,8 @@ app.use(cors());
 app.use(express.json());
 connectDB();
 
-// // Rutas
-// app.use('/', cursoRoutes);
+// Rutas
+app.use('/api/cursos', cursoRoutes);
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);

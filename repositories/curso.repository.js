@@ -1,4 +1,4 @@
-import { Curso } from "../models/curso.model";
+import { Curso } from "../models/curso.model.js";
 
 // Crear un curso
 export const crearCurso = async (data) => {

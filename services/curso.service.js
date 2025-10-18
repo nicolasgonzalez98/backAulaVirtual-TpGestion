@@ -1,4 +1,4 @@
-import cursoRepository from "../repositories/curso.repository";
+import cursoRepository from "../repositories/curso.repository.js";
 
 // Crear un curso
 export const crearCurso = async (data) => {

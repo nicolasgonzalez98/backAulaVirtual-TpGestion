@@ -1,7 +1,8 @@
 @cursoId = 6854ceac38bd69f4c8af6571
-
+@establecimientoId = 652c1e2f8f1b2a0012345678
+@codigoCurso = MAT101
 ### Crear un curso
-POST http://localhost:3000/curso
+POST http://localhost:3000/api/cursos
 Content-Type: application/json
 
 {
@@ -13,13 +14,13 @@ Content-Type: application/json
 }
 
 ### Obtener todos los cursos
-GET http://localhost:3000/curso
+GET http://localhost:3000/api/cursos
 
 ### Obtener curso por ID
-GET http://localhost:3000/curso/{{cursoId}}
+GET http://localhost:3000/api/cursos/{{cursoId}}
 
 ### Actualizar curso
-PUT http://localhost:3000/curso/{{cursoId}}
+PUT http://localhost:3000/api/cursos/{{cursoId}}
 Content-Type: application/json
 
 {
@@ -31,10 +32,10 @@ Content-Type: application/json
 }
 
 ### Eliminar curso
-DELETE http://localhost:3000/curso/{{cursoId}}
+DELETE http://localhost:3000/api/cursos/{{cursoId}}
 
 ### Obtener cursos por establecimiento
-GET http://localhost:3000/curso/establecimiento/652c1e2f8f1b2a0012345678
+GET http://localhost:3000/api/cursos/establecimiento/{{establecimientoId}}
 
 ### Buscar cursos por nombre o código
-GET http://localhost:3000/curso/buscarCurso?q=mat
+GET http://localhost:3000/api/cursos/buscarCurso?q={{codigoCurso}}
