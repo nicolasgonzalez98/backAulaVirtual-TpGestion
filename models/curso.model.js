@@ -1,14 +1,31 @@
 import mongoose from 'mongoose';
 
-const cursoSchema = new mongoose.Schema({
+const CursoSchema = new mongoose.Schema(
+  {
     nombre: { type: String, required: true },
-    codigo: { type: String, required: true, unique: true },
-    anio: { type: Number, required: true },
-    descripcion: { type: String },
-    establecimiento_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento', required: true }
-}, { 
-    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-});
+    codigo: { type: String },
+    anio: Number,
+    descripcion: String,
+    establecimiento: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Establecimiento',
+      required: true
+    },
+    docentes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
+    alumno: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
+    modalidadClases: {
+      type: String,
+      enum: ['fechas_preestablecidas', 'clases_diarias'],
+      required: true,
+    },
+    // Para modalidad 'fechas_preestablecidas' -> las clases se crean manualmente (ya lo haces con tu modelo Clase)
+    // Para modalidad 'clases_diarias' -> se generan automáticamente con estos campos:
+    fechaInicio: { type: Date },
+    fechaFin: { type: Date },
+    duracionPorDiaHoras: { type: Number, default: 8 }
+  },
+  { timestamps: true }
+);
 
 
 export const Curso = mongoose.model('Curso', cursoSchema);
