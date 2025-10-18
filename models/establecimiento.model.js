@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const EstablecimientoSchema = new mongoose.Schema(
   {
@@ -6,9 +6,12 @@ const EstablecimientoSchema = new mongoose.Schema(
     direccion: String,
     telefono: String,
     email: String,
-    cursos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Curso' }]
+    latitud: { type: Number, required: false },
+    longitud: { type: Number, required: false },
+    cursos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Curso' }],
+    responsable: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }
   },
   { timestamps: true }
 );
 
-export default mongoose.model('Establecimiento', EstablecimientoSchema);
+module.exports = mongoose.model('Establecimiento', EstablecimientoSchema);

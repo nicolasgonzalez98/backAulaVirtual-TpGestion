@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-const UsuarioSchema = new mongoose.Schema(
+const usuarioSchema = new mongoose.Schema(
   {
     nombre: { type: String, required: true },
     apellido: { type: String, required: true },
@@ -11,9 +11,10 @@ const UsuarioSchema = new mongoose.Schema(
       enum: ['alumno', 'docente', 'admin', 'superadmin'],
       required: true
     },
-    establecimientos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento' }]
+    establecimientos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento' }],
+    establecimientoAdministra: { type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento', default: null }
   },
   { timestamps: true }
 );
 
-export default mongoose.model('Usuario', UsuarioSchema);
+module.exports = mongoose.model("Usuario", usuarioSchema)
