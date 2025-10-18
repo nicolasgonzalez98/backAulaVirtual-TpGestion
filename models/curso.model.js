@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const CursoSchema = new mongoose.Schema(
   {
@@ -12,6 +12,7 @@ const CursoSchema = new mongoose.Schema(
       required: true
     },
     docentes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
+    alumno: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
     modalidadClases: {
       type: String,
       enum: ['fechas_preestablecidas', 'clases_diarias'],
@@ -26,4 +27,5 @@ const CursoSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Curso', CursoSchema);
+
+export const Curso = mongoose.model('Curso', cursoSchema);

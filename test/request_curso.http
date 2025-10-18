@@ -1,0 +1,41 @@
+@cursoId = 6854ceac38bd69f4c8af6571
+@establecimientoId = 652c1e2f8f1b2a0012345678
+@codigoCurso = MAT101
+### Crear un curso
+POST http://localhost:3000/api/cursos
+Content-Type: application/json
+
+{
+  "nombre": "Matemática",
+  "codigo": "MAT101",
+  "anio": 2025,
+  "descripcion": "Curso de matemática básica",
+  "establecimiento_id": "652c1e2f8f1b2a0012345678"
+}
+
+### Obtener todos los cursos
+GET http://localhost:3000/api/cursos
+
+### Obtener curso por ID
+GET http://localhost:3000/api/cursos/{{cursoId}}
+
+### Actualizar curso
+PUT http://localhost:3000/api/cursos/{{cursoId}}
+Content-Type: application/json
+
+{
+  "nombre": "Matemática avanzada",
+  "codigo": "MAT201",
+  "anio": 2025,
+  "descripcion": "Curso avanzado",
+  "establecimiento_id": "652c1e2f8f1b2a0012345678"
+}
+
+### Eliminar curso
+DELETE http://localhost:3000/api/cursos/{{cursoId}}
+
+### Obtener cursos por establecimiento
+GET http://localhost:3000/api/cursos/establecimiento/{{establecimientoId}}
+
+### Buscar cursos por nombre o código
+GET http://localhost:3000/api/cursos/buscarCurso?q={{codigoCurso}}

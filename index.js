@@ -1,24 +1,19 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors')
+import dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import connectDB from './database/connection.js';
+import cursoRoutes from './routes/curso.routes.js';
+
+dotenv.config();
 const app = express();
 const port = process.env.PORT;
-const authRoutes = require('./routes/auth.routes');
-const establecimientosRoutes = require('./routes/establecimiento.routes'); 
-const connectDB = require('./database/connection');
-
 
 app.use(cors());
 app.use(express.json());
 connectDB();
 
-app.get('/', (req, res) => {
-  res.send('Hola desde Aula Virtual 👋');
-});
-
-app.use('/api/auth', authRoutes);
-app.use('/api/establecimientos', establecimientosRoutes);
-
+// Rutas
+app.use('/api/cursos', cursoRoutes);
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
