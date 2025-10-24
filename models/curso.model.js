@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const CursoSchema = new mongoose.Schema(
   {
@@ -6,7 +6,7 @@ const CursoSchema = new mongoose.Schema(
     codigo: { type: String },
     anio: Number,
     descripcion: String,
-    establecimiento: {
+    establecimiento_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Establecimiento',
       required: true
@@ -27,5 +27,4 @@ const CursoSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
-export const Curso = mongoose.model('Curso', cursoSchema);
+module.exports = mongoose.model('Curso', CursoSchema);

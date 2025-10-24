@@ -1,7 +1,6 @@
-import { Router } from "express";
-import cursoController from "../controllers/curso.controller.js";
-
-const router = Router();
+const express = require('express');
+const router = express.Router();
+const cursoController = require('../controllers/curso.controller');
 
 // Crear un curso
 router.post("/", cursoController.crearCurso);
@@ -24,4 +23,4 @@ router.get("/establecimiento/:establecimientoId", cursoController.obtenerCursosP
 // Buscar cursos por nombre o código
 router.get("/buscar", cursoController.buscarCursosByNameOrCode);
 
-export default router;
+module.exports = router;
