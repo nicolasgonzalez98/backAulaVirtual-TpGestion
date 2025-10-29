@@ -6,7 +6,7 @@ const CursoSchema = new mongoose.Schema(
     codigo: { type: String },
     anio: Number,
     descripcion: String,
-    establecimiento: {
+    establecimiento_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Establecimiento',
       required: true
