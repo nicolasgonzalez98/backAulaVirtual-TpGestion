@@ -1,4 +1,5 @@
 const establecimientoRepository = require('../repositories/establecimiento.repository');
+const Usuario = require('../models/usuario.model');
 
 class EstablecimientoService {
   async crearEstablecimiento(data) {
@@ -13,9 +14,10 @@ class EstablecimientoService {
     // Crear el usuario responsable
     const nuevoUsuario = new Usuario({
       nombre: responsable.nombre,
+      apellido: responsable.apellido,
       email: responsable.email,
       password: responsable.password,
-      rol: 'admin_establecimiento'
+      rol: 'admin'
     });
     await nuevoUsuario.save();
     const establecimiento = await establecimientoRepository.crear({
@@ -31,6 +33,7 @@ class EstablecimientoService {
     // Relacionamos el establecimiento en el usuario
     nuevoUsuario.establecimiento = establecimiento._id;
     await nuevoUsuario.save();
+    console.log(nuevoUsuario);
     return {
         message: 'Establecimiento registrado correctamente.',
         establecimiento,
