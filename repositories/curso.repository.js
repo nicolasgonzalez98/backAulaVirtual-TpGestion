@@ -1,50 +1,46 @@
-import { Curso } from "../models/curso.model.js";
+const Curso = require('../models/curso.model');
 
-// Crear un curso
-export const crearCurso = async (data) => {
-  const curso = new Curso(data);
-  return await curso.save();
-};
+class CursoRepository {
+  // Crear un curso
+  async crearCurso(data) {
+    const curso = new Curso(data);
+    return await curso.save();
+  };
 
-// Obtener todos los cursos
-export const obtenerCursos = async () => {
-  return await Curso.find().populate('establecimiento_id');
-};
+  // Obtener todos los cursos
+  async obtenerCursos() {
+    return await Curso.find().populate('establecimiento_id');
+  };
 
-// Obtener curso por ID
-export const obtenerCursoPorId = async (id) => {
-  return await Curso.findById(id).populate('establecimiento_id');
-};
+  // Obtener curso por ID
+  async obtenerCursoPorId(id) {
+    return await Curso.findById(id).populate('establecimiento_id');
+  };
 
-// Actualizar curso
-export const actualizarCurso = async (id, data) => {
-  return await Curso.findByIdAndUpdate(id, data, { new: true });
-};
+  // Actualizar curso
+  async actualizarCurso(id, data) {
+    return await Curso.findByIdAndUpdate(id, data, { new: true });
+  };
 
-// Eliminar curso
-export const eliminarCurso = async (id) => {
-  return await Curso.findByIdAndDelete(id);
-};
+  // Eliminar curso
+  async eliminarCurso(id) {
+    return await Curso.findByIdAndDelete(id);
+  };
 
-// Obtener cursos por establecimiento
-export const obtenerCursosPorEstablecimiento = async (establecimientoId) => {
-  return await Curso.find({ establecimiento_id: establecimientoId }).populate('establecimiento_id');
-};
+  // Obtener cursos por establecimiento
+  async obtenerCursosPorEstablecimiento(establecimientoId) {
+    return await Curso.find({ establecimiento_id: establecimientoId }).populate('establecimiento_id');
+  };
 
-// Buscar cursos por nombre o código
-export const buscarCursosByNameOrCode = async (query) => {
-  return await Curso.find({ $or: [
-    { nombre: new RegExp(query, 'i') },
-    { codigo: new RegExp(query, 'i') }
-  ]}).populate('establecimiento_id');
+  // Buscar cursos por nombre o código
+  async buscarCursosByNameOrCode(query) {
+    return await Curso.find({
+      $or: [
+        { nombre: new RegExp(query, 'i') },
+        { codigo: new RegExp(query, 'i') }
+      ]
+    }).populate('establecimiento_id');
+  }
 }
 
-export default {
-    crearCurso,
-    obtenerCursos,
-    obtenerCursoPorId,
-    actualizarCurso,
-    eliminarCurso,
-    obtenerCursosPorEstablecimiento,
-    buscarCursosByNameOrCode
-};
+module.exports = new CursoRepository();
