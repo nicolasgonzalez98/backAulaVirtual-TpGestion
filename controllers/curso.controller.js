@@ -75,6 +75,24 @@ class CursoController {
       res.status(500).json({ error: error.message });
     }
   };
+
+  // Registrar asistencia por curso
+  async registrarAsistencia(req, res) {
+    try {
+      const { cursoId } = req.params;
+      const userId = req.user._id; // viene del middleware
+
+      const asistencia = await cursoService.registrarAsistencia(cursoId, userId);
+
+      res.status(200).json({
+        message: 'Asistencia registrada correctamente',
+        asistencia
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(400).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = new CursoController();

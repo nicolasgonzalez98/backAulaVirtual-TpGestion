@@ -35,5 +35,41 @@ class CursoService {
   async buscarCursosByNameOrCode(query) {
     return await cursoRepository.buscarCursosByNameOrCode(query);
   };
+
+  async registrarAsistencia(cursoId, userId) {
+    // Verificar si el usuario pertenece al curso
+    const curso = await cursoRepository.obtenerPorId(cursoId);
+
+    if (!curso) {
+      throw new Error('Curso no encontrado');
+    }
+
+    const estaInscripto = curso.alumnos.some(alumnoId => alumnoId.equals(userId));
+    if (!estaInscripto) {
+      throw new Error('El usuario no está inscripto en este curso');
+    }
+
+    // Buscar si ya hay una asistencia registrada hoy
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    const asistenciaExistente = await asistenciaRepository.buscarPorCursoYAlumno(cursoId, userId, hoy);
+
+    if (asistenciaExistente) {
+      asistenciaExistente.estado = 'presente';
+      asistenciaExistente.hora_registro = new Date();
+      return await asistenciaExistente.save();
+    }
+
+    // Crear nueva asistencia
+    const nuevaAsistencia = await asistenciaRepository.crear({
+      clase: null, // opcional, depende de tu lógica
+      alumno: userId,
+      estado: 'presente',
+      metodo_registro: 'manual'
+    });
+
+    return nuevaAsistencia;
+  }
 }
 module.exports = new CursoService();
