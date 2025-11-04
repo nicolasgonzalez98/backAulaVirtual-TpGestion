@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const cursoController = require('../controllers/curso.controller');
-const authMiddleware = require('../middlewares/auth.middleware');
 
 // Crear un curso
 router.post("/", cursoController.crearCurso);
@@ -23,8 +22,5 @@ router.get("/establecimiento/:establecimientoId", cursoController.obtenerCursosP
 
 // Buscar cursos por nombre o código
 router.get("/buscar", cursoController.buscarCursosByNameOrCode);
-
-//Dar asistencia por curso
-router.post('/:cursoId/asistencia', authMiddleware, cursoController.registrarAsistencia);
 
 module.exports = router;

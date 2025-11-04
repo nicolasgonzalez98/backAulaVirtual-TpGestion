@@ -4,6 +4,8 @@ const Usuario = require('../models/usuario.model');
 
 module.exports = async (req, res, next) => {
   try {
+
+    
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -12,8 +14,8 @@ module.exports = async (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    const usuario = await Usuario.findById(decoded.id);
+    console.log('decoded:', decoded);
+    const usuario = await Usuario.findById(decoded._id);
     if (!usuario) {
       return res.status(401).json({ message: 'Usuario no encontrado' });
     }
