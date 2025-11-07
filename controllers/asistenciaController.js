@@ -91,6 +91,7 @@ class AsistenciaController {
 
   async registrarAsistencia(req, res){
     try {
+      console.log('req.body:', req.body);
       const { cursoId, claseId } = req.params;
       const userId = req.user._id ? req.user._id.toString() : (req.user.id || req.user);// obtenido del middleware de auth
       const { latitude, longitude } = req.body || {};
@@ -109,11 +110,17 @@ class AsistenciaController {
         return res.status(404).json({ message: 'Clase no encontrada o no pertenece al curso' });
 
       // 4) Si el curso tiene establecimiento con coords, validar geolocalización
-      // 4️⃣ Validar geolocalización si corresponde
-      const geoRequired = req.query.geo === 'true'; // 🔹 usar query ?geo=true solo en QR impreso
-
+      // Validar geolocalización si corresponde
+      
+      const geoRequired = req.body.geo === true;
+      // 🔹 usar query ?geo=true solo en QR impreso
       if (geoRequired) {
-        const establecimiento = curso.establecimiento_id;
+        const establecimiento = await Curso.findById(cursoId)
+          .populate('establecimiento_id')
+          .then(c => c.establecimiento_id);
+
+        console.log('Establecimiento para validación geoloc:', establecimiento);
+
         if (establecimiento && establecimiento.latitud != null && establecimiento.longitud != null) {
           if (latitude == null || longitude == null) {
             return res.status(400).json({ message: 'Se requiere ubicación para validar presencia en el establecimiento' });
@@ -123,11 +130,13 @@ class AsistenciaController {
           const lonE = Number(establecimiento.longitud);
           const latU = Number(latitude);
           const lonU = Number(longitude);
+          console.log(`Validando ubicación del usuario: (${latU}, ${lonU}) vs establecimiento: (${latE}, ${lonE})`);
 
           const metros = distanciaEnMetros(latE, lonE, latU, lonU);
-          const UMBRAL_METROS = 100;
+          const UMBRAL_METROS = 300;
 
           if (metros > UMBRAL_METROS) {
+            
             return res.status(403).json({
               message: `Estás demasiado lejos del establecimiento (${Math.round(metros)} m). Debes estar dentro de ${UMBRAL_METROS} m para registrar asistencia.`,
             });
