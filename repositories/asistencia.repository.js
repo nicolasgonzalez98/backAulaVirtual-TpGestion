@@ -37,6 +37,21 @@ class AsistenciaRepository {
       .populate('clase')
       .populate('alumno');
   }
+
+  async buscarPorCursoYAlumno(cursoId, alumnoId, fecha) {
+    // Buscar clases del curso en la fecha actual
+    const clase = await Clase.findOne({
+      curso: cursoId,
+      fecha: { $gte: fecha, $lt: new Date(fecha.getTime() + 24 * 60 * 60 * 1000) }
+    });
+
+    if (!clase) return null;
+
+    return await Asistencia.findOne({
+      clase: clase._id,
+      alumno: alumnoId
+    });
+  }
 }
 
 module.exports = new AsistenciaRepository();

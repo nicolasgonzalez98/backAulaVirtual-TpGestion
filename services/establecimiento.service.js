@@ -1,4 +1,6 @@
 const establecimientoRepository = require('../repositories/establecimiento.repository');
+const Usuario = require('../models/usuario.model');
+const bcrypt = require('bcrypt');
 
 class EstablecimientoService {
   async crearEstablecimiento(data) {
@@ -9,15 +11,22 @@ class EstablecimientoService {
     if (existeUsuario) {
       throw new Error('Ya existe un usuario con ese email.');
     }
+    
 
     // Crear el usuario responsable
+    const hashedPassword = await bcrypt.hash(responsable.password, 10);
+
     const nuevoUsuario = new Usuario({
       nombre: responsable.nombre,
+      apellido: responsable.apellido,
       email: responsable.email,
-      password: responsable.password,
-      rol: 'admin_establecimiento'
+      password: hashedPassword,
+      rol: 'admin'
     });
+
     await nuevoUsuario.save();
+
+    //Finaliza registro establecimiento
     const establecimiento = await establecimientoRepository.crear({
       nombre,
       direccion,
@@ -31,6 +40,7 @@ class EstablecimientoService {
     // Relacionamos el establecimiento en el usuario
     nuevoUsuario.establecimiento = establecimiento._id;
     await nuevoUsuario.save();
+    
     return {
         message: 'Establecimiento registrado correctamente.',
         establecimiento,

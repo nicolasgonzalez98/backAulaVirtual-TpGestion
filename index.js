@@ -16,7 +16,14 @@ require('./models/curso.model');
 require('./models/establecimiento.model');
 require('./models/usuario.model');
 
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:4200', // 👈 tu frontend Angular
+  credentials: true,               // 👈 permite Authorization o cookies
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // 👈 habilita preflight completo
+  allowedHeaders: ['Content-Type', 'Authorization','X-Requested-With'],    // 👈 asegura que tu token Bearer pase
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const authRoutes = require('./routes/auth.routes');

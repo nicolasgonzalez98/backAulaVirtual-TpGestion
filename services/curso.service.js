@@ -35,5 +35,6 @@ class CursoService {
   async buscarCursosByNameOrCode(query) {
     return await cursoRepository.buscarCursosByNameOrCode(query);
   };
+
 }
 module.exports = new CursoService();
