@@ -91,10 +91,9 @@ class AsistenciaController {
 
   async registrarAsistencia(req, res){
     try {
-      console.log('req.body:', req.body);
       const { cursoId, claseId } = req.params;
       const userId = req.user._id ? req.user._id.toString() : (req.user.id || req.user);// obtenido del middleware de auth
-      const { latitude, longitude } = req.body || {};
+      const { latitude, longitude, token, geo } = req.body || {};
       
       // 1️⃣ Verificar que el curso exista
       const curso = await Curso.findById(cursoId);
@@ -112,9 +111,9 @@ class AsistenciaController {
       // 4) Si el curso tiene establecimiento con coords, validar geolocalización
       // Validar geolocalización si corresponde
       
-      const geoRequired = req.body.geo === true;
+      
       // 🔹 usar query ?geo=true solo en QR impreso
-      if (geoRequired) {
+      if (geo) {
         const establecimiento = await Curso.findById(cursoId)
           .populate('establecimiento_id')
           .then(c => c.establecimiento_id);
@@ -144,7 +143,28 @@ class AsistenciaController {
         } else {
           console.warn(`Curso ${cursoId} no tiene lat/lon — no se valida ubicación.`);
         }
+      }else {
+      // 🕐 Validación por token temporal
+      if (!token) {
+        return res.status(400).json({ message: 'Token requerido para QR sin geolocalización' });
       }
+
+      // Token con formato timestamp-random
+      const timestampPart = token.split('-')[0];
+      const tokenTime = Number(timestampPart);
+
+      if (isNaN(tokenTime)) {
+        return res.status(400).json({ message: 'Token inválido' });
+      }
+
+      // Test: 30 segundos de validez (luego será 5 minutos)
+      const ahora = Math.floor(Date.now() / 1000);
+      const diff = ahora - tokenTime;
+
+      if (diff > 300) {
+        return res.status(403).json({ message: 'Token expirado. Escaneá un QR actualizado.' });
+      }
+    }
 
       // 5- Buscar si ya existe asistencia registrada
       let asistencia = await Asistencia.findOne({ clase: claseId, alumno: userId });
