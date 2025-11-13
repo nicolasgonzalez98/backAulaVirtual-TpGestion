@@ -75,6 +75,38 @@ class CursoController {
       res.status(500).json({ error: error.message });
     }
   };
+
+  // Vincular alumno a curso
+  async vincularAlumno(req, res) {
+    try {
+      const { cursoId, alumnoId } = req.params;
+      const curso = await cursoService.vincularAlumno(cursoId, alumnoId);
+      res.status(200).json(curso);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  // Desvincular alumno de curso
+  async desvincularAlumno(req, res) {
+    try {
+      const { cursoId, alumnoId } = req.params;
+      const curso = await cursoService.desvincularAlumno(cursoId, alumnoId);
+      res.status(200).json(curso);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  // Obtener cursos por alumno
+  async obtenerCursosPorAlumno(req, res) {
+    try {
+      const cursos = await cursoService.obtenerCursosPorAlumno(req.params.alumnoId);
+      res.status(200).json(cursos);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = new CursoController();

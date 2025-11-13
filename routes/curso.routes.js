@@ -16,4 +16,11 @@ router.get("/establecimiento/:establecimientoId", cursoController.obtenerCursosP
 
 router.get("/buscar", cursoController.buscarCursosByNameOrCode);
 
+router.post('/:cursoId/alumnos/:alumnoId', cursoController.vincularAlumno);
+
+router.delete('/:cursoId/alumnos/:alumnoId', cursoController.desvincularAlumno);
+
+router.get('/alumno/:alumnoId', cursoController.obtenerCursosPorAlumno);
+
+
 module.exports = router;
