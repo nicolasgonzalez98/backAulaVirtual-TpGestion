@@ -13,7 +13,7 @@ const usuarioSchema = new mongoose.Schema(
     },
     establecimientos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento' }],
     establecimientoAdministra: { type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento', default: null },
-    activo: { type: Boolean, default: true }
+    active: { type: Boolean, default: true }
   },
   { timestamps: true }
 );
