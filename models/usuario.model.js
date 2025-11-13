@@ -12,7 +12,8 @@ const usuarioSchema = new mongoose.Schema(
       required: true
     },
     establecimientos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento' }],
-    establecimientoAdministra: { type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento', default: null }
+    establecimientoAdministra: { type: mongoose.Schema.Types.ObjectId, ref: 'Establecimiento', default: null },
+    activo: { type: Boolean, default: true }
   },
   { timestamps: true }
 );
