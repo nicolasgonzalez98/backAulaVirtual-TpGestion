@@ -12,7 +12,7 @@ const CursoSchema = new mongoose.Schema(
       required: true
     },
     docentes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
-    alumno: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
+    alumnos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
     modalidadClases: {
       type: String,
       enum: ['fechas_preestablecidas', 'clases_diarias'],
