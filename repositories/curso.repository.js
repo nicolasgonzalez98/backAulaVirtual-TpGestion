@@ -46,23 +46,23 @@ class CursoRepository {
   async vincularAlumno(cursoId, alumnoId) {
     return await Curso.findByIdAndUpdate(
       cursoId,
-      { $addToSet: { alumno: alumnoId } },
+      { $addToSet: { alumnos: alumnoId } },
       { new: true }
-    ).populate('alumno', 'nombre apellido email');
+    ).populate('alumnos', 'nombre apellido email');
   }
 
   // Desvincular alumno de curso
   async desvincularAlumno(cursoId, alumnoId) {
     return await Curso.findByIdAndUpdate(
       cursoId,
-      { $pull: { alumno: alumnoId } },
+      { $pull: { alumnos: alumnoId } },
       { new: true }
     );
   }
 
   // Obtener cursos por alumno
   async obtenerCursosPorAlumno(alumnoId) {
-    return await Curso.find({ alumno: alumnoId }).populate('establecimiento_id');
+    return await Curso.find({ alumnos: alumnoId }).populate('establecimiento_id');
   }
 }
 
