@@ -64,6 +64,11 @@ class CursoRepository {
   async obtenerCursosPorAlumno(alumnoId) {
     return await Curso.find({ alumnos: alumnoId }).populate('establecimiento_id');
   }
+
+  // Obtener cursos por docente
+  async obtenerCursosPorDocente(docenteId) {
+    return await Curso.find({ docentes: docenteId }).populate('establecimiento_id');
+  }
 }
 
 module.exports = new CursoRepository();

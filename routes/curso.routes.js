@@ -9,6 +9,7 @@ router.get("/", cursoController.obtenerCursos);
 router.get("/buscar", cursoController.buscarCursosByNameOrCode);
 router.get("/establecimiento/:establecimientoId", cursoController.obtenerCursosPorEstablecimiento);
 router.get('/alumno/:alumnoId', cursoController.obtenerCursosPorAlumno);
+router.get('/docente/:docenteId', cursoController.obtenerCursosPorDocente);
 
 // RUTAS CON :id AL FINAL
 router.get("/:id", cursoController.obtenerCursoPorId);

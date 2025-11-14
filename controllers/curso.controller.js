@@ -107,6 +107,16 @@ class CursoController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  // Obtener cursos por docente
+  async obtenerCursosPorDocente(req, res) {
+    try {
+      const cursos = await cursoService.obtenerCursosPorDocente(req.params.docenteId);
+      res.status(200).json(cursos);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = new CursoController();
