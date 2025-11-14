@@ -41,6 +41,34 @@ class CursoRepository {
       ]
     }).populate('establecimiento_id');
   }
+
+    // Vincular alumno a curso
+  async vincularAlumno(cursoId, alumnoId) {
+    return await Curso.findByIdAndUpdate(
+      cursoId,
+      { $addToSet: { alumnos: alumnoId } },
+      { new: true }
+    ).populate('alumnos', 'nombre apellido email');
+  }
+
+  // Desvincular alumno de curso
+  async desvincularAlumno(cursoId, alumnoId) {
+    return await Curso.findByIdAndUpdate(
+      cursoId,
+      { $pull: { alumnos: alumnoId } },
+      { new: true }
+    );
+  }
+
+  // Obtener cursos por alumno
+  async obtenerCursosPorAlumno(alumnoId) {
+    return await Curso.find({ alumnos: alumnoId }).populate('establecimiento_id');
+  }
+
+  // Obtener cursos por docente
+  async obtenerCursosPorDocente(docenteId) {
+    return await Curso.find({ docentes: docenteId }).populate('establecimiento_id');
+  }
 }
 
 module.exports = new CursoRepository();

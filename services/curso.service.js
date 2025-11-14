@@ -36,5 +36,20 @@ class CursoService {
     return await cursoRepository.buscarCursosByNameOrCode(query);
   };
 
+  async vincularAlumno(cursoId, alumnoId) {
+  return await cursoRepository.vincularAlumno(cursoId, alumnoId);
+  };
+
+  async desvincularAlumno(cursoId, alumnoId) {
+    return await cursoRepository.desvincularAlumno(cursoId, alumnoId);
+  };
+
+  async obtenerCursosPorAlumno(alumnoId) {
+    return await cursoRepository.obtenerCursosPorAlumno(alumnoId);
+  };
+
+  async obtenerCursosPorDocente(docenteId) {
+    return await cursoRepository.obtenerCursosPorDocente(docenteId);
+  };
 }
 module.exports = new CursoService();
